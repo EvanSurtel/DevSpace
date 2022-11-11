@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');//initialize mongoose; mongoose is what we are using to connect
 const config = require('config');//initiate config conatant to grab string from default.json
-require('dotenv').config();
+require('dotenv').config();//for environment variable
 const db = process.env.MongoURI//config.get('mongoURI');assign string from default.json to const db
 
 const connectDB = async () => { // function for connecting to mongodb
