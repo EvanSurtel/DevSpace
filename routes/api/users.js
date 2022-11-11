@@ -6,6 +6,10 @@ const router = express.Router();
 // @desc    TEST route
 // @access  Public
 
-router.get('/', (req, res) => res.send('User route'));//test route
+router.get('/', (req, res) => {
+    console.log(req.body);//object of data that will be sent to this route; we have to initialize the middleware for the body parser
+    res.send('User route')
+
+});//test route
 
 module.exports = router;

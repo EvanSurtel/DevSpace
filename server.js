@@ -6,6 +6,9 @@ const app = express();// initialize app using express
 
 connectDB();//connect to database
 
+//Initialize middleware
+app.use(express.json({ extended: false }));//allowing to get data in req.body
+
 app.get('/', (req, res) => res.send('API running'));//create single endpoint to test; callback with request response, re.send will send data to browser
 
 //define routes
