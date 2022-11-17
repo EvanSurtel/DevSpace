@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const {check, validationResult} = require('express-validator');
 
 const User = require('../../models/User')
@@ -52,11 +54,25 @@ async (req, res) => { //this handles the response to the validation
 
     user.password = await bcrypt.hash(password, salt);//takes in plaint text password then uses salt hash to encrypt passsword
 
-    await user.save();
+    await user.save();//this saves user into the database
     //return ujasonwebtoken; when a user registers we want them to be logged in right away; in order to be logged in we need that token
-    
+    const payload = {// need to create payload; then sign jwt and pass in payload; then callback to send response to client with the token; then protect route with middleware that will verify token
+        user: {
+            id: user.id//when we saved user, the promise allows us to get the id. when user is saved in database there is an id created for it in the database
+        }
+    }
 
-    res.send('User registered');
+    jwt.sign(//sign token
+        payload, 
+        process.env.jwtSecret,
+        {expiresIn:360000},//optional but recommended
+        (err, token) => {//callback
+            if(err) throw err;
+            res.json({token});//if no error sends token to client
+        }
+        
+        );
+    
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server error');
