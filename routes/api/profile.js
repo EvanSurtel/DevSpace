@@ -1,11 +1,28 @@
 //adding, fetching, updating profiles
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth')
+const Profile = require('../../models/Profile')
+const User = require('../../models/User');
 
-// @route   GET api/profile
-// @desc    TEST route
-// @access  Public
 
-router.get('/', (req, res) => res.send('Profile route'));//test route
+// @route   GET api/profile/me
+// @desc    Get current user profile
+// @access  Private
+
+router.get('/me', auth,  async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);//user pertains to the user field in Profile model, which is of type objectid;//name and avatar are in the User model not in Profile model so we can add those feilds to profile temporarily
+
+        if(!profile) {
+            res.status(400).json({ msg: 'There is no profile for this user'})
+        }
+
+        res.json(profile);
+    } catch(err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});//whatever routes we want to protect we add auth as a second parameter
 
 module.exports = router;
