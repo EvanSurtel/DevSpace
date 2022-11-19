@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {//protected route
         res.status(500).send('Server Error');
     }
 });
-// @route  Post api/auth
+// @route   Post api/auth
 // @desc    Authenticate user and get token
 // @access  Public
 router.post('/', [
