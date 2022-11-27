@@ -158,7 +158,7 @@ router.delete("/", auth, async (req, res) => {
   }
 });
 
-// @route   PUT api/profile
+// @route   PUT api/profile/experience
 // @desc    PUT profile experience ;experiences and education are seperate resources, they are in the same collection but are seperate resources
 // @access  Private
 //put request is used to update data
@@ -198,14 +198,14 @@ router.put(
       await profile.save();
 
       res.json(profile);
-    } catch (error) {
+    } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
     }
   }
 );
 
-//@route   PUT api/profile/experience/:experience_id
+//@route   PUT api/profile/experience/:exp_id
 //@desc    Update experience on profile
 //@access  Private
 router.put(
@@ -243,13 +243,13 @@ router.put(
 
       res.json(profile);
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
       res.status(500).send("Server error");
     }
   }
 );
 
-//@route   DELETE api/profile/experience/:experience_id
+//@route   DELETE api/profile/experience/delete/:exp_id
 //@desc    DELETE experience from profile
 //@access  Private
 router.delete("/experience/delete/:exp_id", auth, async (req, res) => {
@@ -269,7 +269,124 @@ router.delete("/experience/delete/:exp_id", auth, async (req, res) => {
     await profile.save();
     res.json({ profile });
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route   PUT api/profile/education
+// @desc    PUT profile education ;experiences and education are seperate resources, they are in the same collection but are seperate resources
+// @access  Private
+//put request is used to update data
+router.put(
+  "/education",
+  [
+    auth,
+    [
+      check("school", "Title is required").not().isEmpty(),
+      check("degree", "Degree is required").not().isEmpty(),
+      check("fieldofstudy", "Field of study is required").not().isEmpty(),
+      check("from", "Date started is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { school, degree, fieldofstudy, from, to, current, description } =
+      req.body;
+
+    const newEdu = {
+      //create object with data that user submits
+      school,
+      degree,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description,
+    };
+    try {
+      const profile = await Profile.findOne({ user: req.user.id }); //we get req.user.id from token
+
+      profile.education.unshift(newEdu); //profile.experience is an array;unshift same as push but it pushes to the beginning rather than the end. we want most recent will be first
+
+      await profile.save();
+
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+//@route   PUT api/profile/education/:edu_id
+//@desc    Update eeducation on profile
+//@access  Private
+router.put(
+  "/education/:edu_id",
+  [
+    auth,
+    [
+      check("school", "Title is required").not().isEmpty(),
+      check("degree", "Degree is required").not().isEmpty(),
+      check("fieldofstudy", "Field of study is required").not().isEmpty(),
+      check("from", "Date started is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+
+    const { school, degree, fieldofstudy, from, to, current, description } =
+      req.body;
+
+    const edu = { school, degree, fieldofstudy, from }; //create object to hold updated info
+    if (to) edu.to = to;
+    if (current) edu.current = current;
+    if (description) edu.description = description;
+
+    try {
+      //find experience with user id and experience id; once found update
+      const profile = await Profile.findOneAndUpdate(
+        { user: req.user.id, "education._id": req.params.edu_id },
+        { $set: { "education.$": { _id: req.params.edu_id, ...edu } } },
+        { new: true }
+      );
+      await profile.save();
+
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+//@route   DELETE api/profile/education/:edu_id
+//@desc    DELETE education from profile
+//@access  Private
+router.delete("/education/delete/:edu_id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.user.id,
+      "education._id": req.params.edu_id,
+    });
+
+    //Get remove index
+    const removeIndex = profile.education
+      .map((item) => item.id)
+      .indexOf(req.params.edu_id);
+
+    profile.education.splice(removeIndex, 1); //remove experience at index of experience array
+
+    await profile.save();
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server error");
   }
 });
