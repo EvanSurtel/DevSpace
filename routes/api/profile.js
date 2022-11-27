@@ -206,10 +206,10 @@ router.put(
 );
 
 //@route   PUT api/profile/experience/:experience_id
-//@desc    Update user experience
+//@desc    Update experience on profile
 //@access  Private
 router.put(
-  "/experience/:experience_id",
+  "/experience/:exp_id",
   [
     auth,
     [
@@ -235,10 +235,11 @@ router.put(
     try {
       //find experience with user id and experience id; once found update
       const profile = await Profile.findOneAndUpdate(
-        { user: req.user.id, "experience._id": req.params.experience_id },
-        { $set: { "experience.$": { _id: req.params.experience_id, ...exp } } },
+        { user: req.user.id, "experience._id": req.params.exp_id },
+        { $set: { "experience.$": { _id: req.params.exp_id, ...exp } } },
         { new: true }
       );
+      await profile.save();
 
       res.json(profile);
     } catch (err) {
@@ -247,5 +248,30 @@ router.put(
     }
   }
 );
+
+//@route   DELETE api/profile/experience/:experience_id
+//@desc    DELETE experience from profile
+//@access  Private
+router.delete("/experience/delete/:exp_id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.user.id,
+      "experience._id": req.params.exp_id,
+    });
+
+    //Get remove index
+    const removeIndex = profile.experience
+      .map((item) => item.id)
+      .indexOf(req.params.exp_id);
+
+    profile.experience.splice(removeIndex, 1); //remove experience at index of experience array
+
+    await profile.save();
+    res.json({ profile });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server error");
+  }
+});
 
 module.exports = router;
