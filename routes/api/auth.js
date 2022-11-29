@@ -9,8 +9,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 // @route  Get api/auth
-// @desc    Test route
-// @access  Public
+// @desc    Get user by token
+// @access  Private
 router.get('/', auth, async (req, res) => {
   //protected route
   try {
@@ -23,7 +23,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 // @route   Post api/auth
-// @desc    Authenticate user and get token
+// @desc    Authenticate user and get token; login user
 // @access  Public
 router.post(
   '/',

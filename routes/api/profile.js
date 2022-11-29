@@ -8,8 +8,22 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 require('dotenv').config();
 
+
+// @route   GET api/profile
+// @desc    Get all user profiles
+// @access  Public
+router.get('/', async (req, res) => {
+	try {
+	  const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+	  res.json(profiles);
+	} catch (err) {
+	  console.error(err.message);
+	  res.status(500).send('Server Error');
+	}
+  });
+
 // @route   GET api/profile/me
-// @desc    Get current user profile
+// @desc    Get logged in user profile
 // @access  Private
 router.get('/me', auth, async (req, res) => {
   //whatever routes we want to protect route we add auth as a second parameter
@@ -111,18 +125,7 @@ router.post(
   }
 );
 
-// @route   GET api/profile
-// @desc    Get all user profiles
-// @access  Public
-router.get('/', async (req, res) => {
-  try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
-    res.json(profiles);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
+
 
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile from user ID
