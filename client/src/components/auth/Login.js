@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { login } from '../../actions/auth';
 //import axios from 'axios';
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -16,27 +19,13 @@ const Login = () => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log('Success');
-		// const newUser = {
-		// 	name,
-		// 	email,
-		// 	password,
-		// };
-
-		// try {
-		// 	const config = { headers: { 'Content-Type': 'application/json' } };
-
-		// 	const body = JSON.stringify(newUser);
-
-		// 	const res = await axios.post('/api/users', body, config);
-		// 	console.log(res.data);
-		// } catch (err) {
-		// 	console.error(err.respons.data);
-		// }
-
-		//Register({ name, email, password });
+		login(email, password);
 	};
 
+	// Redirect if logged in
+	if (isAuthenticated) {
+		return <Navigate to='/dashboard' />;
+	}
 	return (
 		<section className='container'>
 			<h1 className='large text-primary'>Sign In</h1>
@@ -51,7 +40,6 @@ const Login = () => {
 						name='email'
 						value={email}
 						onChange={onChange}
-						required
 					/>
 					<small className='form-text'>
 						This site uses Gravatar so if you want a profile image, use a
@@ -66,7 +54,6 @@ const Login = () => {
 						minLength='6'
 						value={password}
 						onChange={onChange}
-						required
 					/>
 				</div>
 
@@ -79,4 +66,13 @@ const Login = () => {
 	);
 };
 
-export default Login;
+Login.propTypes = {
+	login: PropTypes.func.isRequired,
+	isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
