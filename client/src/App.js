@@ -5,6 +5,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import { loadUser } from './actions/auth';
+import { LOGOUT } from './actions/types';
 import { HashRouter as Router, Route, Routes, Switch } from 'react-router-dom';
 import './App.css';
 //Redux
@@ -18,6 +19,9 @@ const App = () => {
 			setAuthToken(localStorage.token);
 		}
 		store.dispatch(loadUser());
+		window.addEventListener('storage', () => {
+			if (!localStorage.token) store.dispatch({ type: LOGOUT });
+		});
 	}, []);
 
 	return (
@@ -29,8 +33,8 @@ const App = () => {
 				<Routes>
 					<Route path='/' element={<Landing />} />
 
-					<Route path='/register' element={<Register />} />
-					<Route path='/login' element={<Login />} />
+					<Route path='register' element={<Register />} />
+					<Route path='login' element={<Login />} />
 				</Routes>
 			</Router>
 		</Provider>

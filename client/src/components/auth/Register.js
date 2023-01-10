@@ -15,7 +15,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 	});
 
 	const { name, email, password, password2 } = formData;
-
+	console.log(formData);
 	const onChange = (e) =>
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -45,7 +45,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						type='text'
 						placeholder='Name'
 						name='name'
-						//value={name}
+						value={name}
 						onChange={onChange}
 					/>
 				</div>
@@ -54,7 +54,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						type='email'
 						placeholder='Email Address'
 						name='email'
-						//value={email}
+						value={email}
 						onChange={onChange}
 					/>
 					<small className='form-text'>
@@ -68,7 +68,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						placeholder='Password'
 						name='password'
 						minLength='6'
-						//value={password}
+						value={password}
 						onChange={onChange}
 					/>
 				</div>
@@ -78,11 +78,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 						placeholder='Confirm Password'
 						name='password2'
 						minLength='6'
-						//value={password2}
+						value={password2}
 						onChange={onChange}
 					/>
 				</div>
-				<input type='submit' className='btn btn-primary' />
+				<input type='submit' className='btn btn-primary' value='Register' />
 			</form>
 			<p className='my-1'>
 				Already have an account? <Link to='/login'>Sign In</Link>
