@@ -3,6 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { login } from '../../actions/auth';
+import { getCurrentProfile } from '../../actions/profile';
 //import axios from 'axios';
 
 const Login = ({ login, isAuthenticated }) => {

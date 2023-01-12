@@ -7,7 +7,12 @@ import Spinner from '../layout/Spinner';
 const PrivateRoute = ({
 	component: Component,
 	auth: { isAuthenticated, loading },
-}) => (!isAuthenticated && !loading ? <Navigate to='/login' /> : <Component />);
+}) => {
+	if (loading) return <Spinner />;
+	if (isAuthenticated) return <Component />;
+
+	return <Navigate to='/login' />;
+};
 
 PrivateRoute.propTypes = {
 	auth: PropTypes.object.isRequired,

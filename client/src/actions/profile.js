@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import api from '../utils/api';
 
 import { GET_PROFILE, PROFILE_ERROR } from './types';
 
@@ -9,12 +10,12 @@ export const getCurrentProfile = () => async (dispatch) => {
 
 		dispatch({
 			type: GET_PROFILE,
-			paylaod: res.data,
+			payload: res.data,
 		});
 	} catch (err) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: { msg: err.respone.statusText, status: err.respone.status },
+			payload: { msg: err.response.statusText, status: err.response.status },
 		});
 	}
 };
