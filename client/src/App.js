@@ -46,6 +46,10 @@ const App = () => {
 						path='create-profile'
 						element={<PrivateRoute component={ProfileForm} />}
 					/>
+					<Route
+						path='edit-profile'
+						element={<PrivateRoute component={ProfileForm} />}
+					/>
 				</Routes>
 			</Router>
 		</Provider>
