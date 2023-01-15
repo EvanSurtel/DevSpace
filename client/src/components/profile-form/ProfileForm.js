@@ -1,8 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link, useNavigate, useMatch } from 'react-router-dom';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
 
-const CreateProfile = (props) => {
+const ProfileForm = ({ profile: { profile }, createProfile }) => {
 	const [formData, setFormData] = useState({
 		company: '',
 		website: '',
@@ -37,6 +39,13 @@ const CreateProfile = (props) => {
 
 	const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
+	const navigate = useNavigate();
+
+	const onSubmit = (e) => {
+		e.preventDefault();
+		createProfile(formData, navigate, profile ? true : false);
+	};
+
 	const onChange = (e) =>
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -48,7 +57,7 @@ const CreateProfile = (props) => {
 				profile stand out
 			</p>
 			<small>* = required field</small>
-			<form className='form'>
+			<form className='form' onSubmit={onSubmit}>
 				<div className='form-group'>
 					<select name='status' value={status} onChange={onChange}>
 						<option value='0'>* Select Professional Status</option>
@@ -214,6 +223,14 @@ const CreateProfile = (props) => {
 	);
 };
 
-CreateProfile.propTypes = {};
+ProfileForm.propTypes = {
+	createProfile: PropTypes.func.isRequired,
+	//getCurrentProfile: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired,
+};
 
-export default CreateProfile;
+const mapStateToProps = (state) => ({
+	profile: state.profile,
+});
+
+export default connect(mapStateToProps, { createProfile })(ProfileForm);
