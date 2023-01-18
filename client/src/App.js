@@ -7,6 +7,8 @@ import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import ProfileForm from './components/profile-form/ProfileForm';
 import PrivateRoute from './components/routing/PrivateRoute';
+import AddExperience from './components/profile-form/AddExperience';
+import AddEducation from './components/profile-form/AddEducation';
 import { loadUser } from './actions/auth';
 import { LOGOUT } from './actions/types';
 import { HashRouter as Router, Route, Routes, Switch } from 'react-router-dom';
@@ -49,6 +51,14 @@ const App = () => {
 					<Route
 						path='edit-profile'
 						element={<PrivateRoute component={ProfileForm} />}
+					/>
+					<Route
+						path='add-experience'
+						element={<PrivateRoute component={AddExperience} />}
+					/>
+					<Route
+						path='add-education'
+						element={<PrivateRoute component={AddEducation} />}
 					/>
 				</Routes>
 			</Router>

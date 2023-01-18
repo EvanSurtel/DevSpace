@@ -38,24 +38,20 @@ const ProfileForm = ({
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// if there is no profile, attempt to fetch one
 		if (!profile) getCurrentProfile();
 
-		// if we finished loading and we do have a profile
-		// then build our profileData
 		if (!loading && profile) {
 			const profileData = { ...initialState };
-
 			for (const key in profile) {
 				if (key in profileData) profileData[key] = profile[key];
 			}
 			for (const key in profile.social) {
 				if (key in profileData) profileData[key] = profile.social[key];
 			}
-			// the skills may be an array from our API response
+
 			if (Array.isArray(profileData.skills))
 				profileData.skills = profileData.skills.join(', ');
-			// set local state with the profileData
+
 			setFormData(profileData);
 		}
 	}, [loading, getCurrentProfile, profile]);
