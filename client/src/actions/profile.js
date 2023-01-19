@@ -3,14 +3,14 @@ import { setAlert } from './alert';
 import api from '../utils/api';
 
 import {
-	ACCOUNT_DELETED,
-	CLEAR_PROFILE,
+	UPDATE_PROFILE,
 	GET_PROFILE,
 	GET_PROFILES,
 	GET_REPOS,
 	PROFILE_ERROR,
 	NO_REPOS,
-	UPDATE_PROFILE,
+	ACCOUNT_DELETED,
+	CLEAR_PROFILE,
 } from './types';
 
 // Get logged in users profile
