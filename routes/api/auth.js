@@ -41,7 +41,9 @@ router.post(
 			let user = await User.findOne({ email }); //since this returns promise, if user exists then the credentials will mbe stores in user
 			if (!user) {
 				//if there is no user with that email
-				return res.status(400).json({ msg: 'Invalid Credentials' });
+				return res
+					.status(400)
+					.json({ errors: [{ msg: 'Invalid Credentials' }] });
 			}
 
 			const isMatch = await bcrypt.compare(password, user.password); //since above let user = await User.findOne({email}); returns promise, we can access user.password which is encypted

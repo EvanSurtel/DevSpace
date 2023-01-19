@@ -150,9 +150,12 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
 	try {
-		await Profile.findOneAndRemove({ user: req.user.id }); //remove user profile
+		await Promise.all([
+			Profile.findOneAndRemove({ user: req.user.id }),
 
-		await User.findOneAndRemove({ _id: req.user.id }); //Remove user
+			User.findOneAndRemove({ _id: req.user.id }),
+		]);
+
 		res.json({ msg: 'User deleted' });
 	} catch (err) {
 		console.error(err.message);
@@ -269,7 +272,7 @@ router.delete('/experience/delete/:exp_id', auth, async (req, res) => {
 		profile.experience.splice(removeIndex, 1); //remove experience at index of experience array
 
 		await profile.save();
-		res.json({ profile });
+		res.json(profile);
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send('Server error');
@@ -325,7 +328,7 @@ router.put(
 );
 
 //@route   PUT api/profile/education/:edu_id
-//@desc    Update eeducation on profile
+//@desc    Update education on profile
 //@access  Private
 router.put(
 	'/education/:edu_id',
