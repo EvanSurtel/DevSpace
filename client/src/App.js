@@ -6,6 +6,7 @@ import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import ProfileForm from './components/profile-form/ProfileForm';
+import Profiles from './components/profiles/Profiles';
 import PrivateRoute from './components/routing/PrivateRoute';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
@@ -40,6 +41,7 @@ const App = () => {
 
 					<Route path='register' element={<Register />} />
 					<Route path='login' element={<Login />} />
+					<Route path='profiles' element={<Profiles />} />
 					<Route
 						path='dashboard'
 						element={<PrivateRoute component={Dashboard} />}
