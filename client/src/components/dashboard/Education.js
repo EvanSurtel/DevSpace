@@ -10,7 +10,7 @@ const Education = ({ education, deleteEducation }) => {
 			<td>{edu.school}</td>
 			<td className='hide-sm'>{edu.degree}</td>
 			<td>
-				{formatDate(edu.from)} to {edu.to ? formatDate(edu.to) : 'Now'}
+				{formatDate(edu.from)} to {edu.to ? formatDate(edu.to) : 'Current'}
 			</td>
 			<td>
 				<button

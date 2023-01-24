@@ -79,7 +79,9 @@ const AddEducation = ({ addEducation }) => {
 							name='current'
 							checked={current}
 							value={current}
-							onChange={() => setFormData({ ...formData, current: !current })}
+							onChange={() => {
+								setFormData({ ...formData, current: !current, to: '' });
+							}}
 						/>{' '}
 						Current School or Bootcamp
 					</p>
