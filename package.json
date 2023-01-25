@@ -22,6 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "mongoose": "^6.7.1",
+    "net": "^1.0.2",
     "react-hook-form": "^7.40.0",
     "react-moment": "^1.1.2",
     "react-redux": "^8.0.5",

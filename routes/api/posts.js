@@ -111,7 +111,7 @@ router.put('/like/:id', auth, async (req, res) => {
 
 		await post.save();
 
-		res.json(post);
+		res.json(post.likes);
 	} catch (err) {
 		console.error(err);
 		res.status(500).send('Server error');
@@ -135,7 +135,7 @@ router.delete('/unlike/:id', auth, async (req, res) => {
 
 		await post.save();
 
-		res.json(post);
+		res.json(post.likes);
 	} catch (err) {
 		console.error(err);
 		res.status(500).send('Server error');
@@ -195,7 +195,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 		);
 
 		await post.save();
-		res.json(post);
+		res.json(post.comments);
 	} catch (err) {
 		console.error(err);
 		res.status(500).send('Server error');

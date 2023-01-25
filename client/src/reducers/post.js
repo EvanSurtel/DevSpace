@@ -1,3 +1,4 @@
+import { post } from 'request';
 import { GET_POSTS, POST_ERROR, UPDATE_LIKES } from '../actions/types';
 
 const initialSate = {
@@ -25,7 +26,13 @@ function postReducer(state = initialSate, action) {
 				loading: true,
 			};
 		case UPDATE_LIKES:
-			return {};
+			return {
+				...state,
+				posts: state.post.map((post) =>
+					post._id === payload.id ? { ...post, likes: payload.likes } : post
+				),
+				loading: false,
+			};
 		default:
 			return state;
 	}
