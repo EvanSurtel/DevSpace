@@ -42,6 +42,6 @@ const ProfileTop = ({
 	</div>
 );
 
-ProfileTop.propTypes = {};
+ProfileTop.propTypes = { profile: PropTypes.object.isRequired };
 
 export default ProfileTop;

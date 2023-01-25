@@ -25,7 +25,7 @@ export const addLike = (id) => async (dispatch) => {
 
 		dispatch({
 			type: UPDATE_LIKES,
-			payload: res.data,
+			payload: { id, likes: res.data },
 		});
 	} catch (err) {
 		dispatch({

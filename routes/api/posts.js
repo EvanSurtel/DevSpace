@@ -34,7 +34,7 @@ router.post(
 
 			res.json(post);
 		} catch (err) {
-			monsole.error(err);
+			console.error(err);
 			res.status(500).send('Server error');
 		}
 	}
