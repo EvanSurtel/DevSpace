@@ -1,4 +1,3 @@
-import { post } from 'request';
 import { GET_POSTS, POST_ERROR, UPDATE_LIKES } from '../actions/types';
 
 const initialSate = {
@@ -23,7 +22,7 @@ function postReducer(state = initialSate, action) {
 			return {
 				...state,
 				error: payload,
-				loading: true,
+				loading: false,
 			};
 		case UPDATE_LIKES:
 			return {
