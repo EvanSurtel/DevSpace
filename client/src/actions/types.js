@@ -19,3 +19,6 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 export const GET_POSTS = 'GET_POSTS';
 export const POST_ERROR = 'POST_ERROR';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
+export const DELETE_POST = 'DELETE_COMMENT';
+export const GET_POST = 'GET_POST';
