@@ -22,3 +22,4 @@ export const UPDATE_LIKES = 'UPDATE_LIKES';
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
 export const DELETE_POST = 'DELETE_COMMENT';
 export const GET_POST = 'GET_POST';
+export const ADD_POST = 'ADD_POST';

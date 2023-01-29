@@ -24,33 +24,34 @@ const PostItem = ({
 		<div>
 			<p className='my-1'>{text}</p>
 			<p className='post-date'>Posted on {formatDate(date)}</p>
-			{showActions && (
-				<Fragment>
-					<button
-						onClick={() => addLike(_id)}
-						type='button'
-						className='btn btn-light'
-					>
-						<i className='fas fa-thumbs-up' />{' '}
-						<span>{likes.length > 0 && <span>{likes.length}</span>}</span>
-					</button>
-					<button className='btn btn-light' onClick={() => removeLike(_id)}>
-						<i className='fas fa-thumbs-down' />
-					</button>
+
+			<Fragment>
+				<button
+					onClick={() => addLike(_id)}
+					type='button'
+					className='btn btn-light'
+				>
+					<i className='fas fa-thumbs-up' />{' '}
+					<span>{likes.length > 0 && <span>{likes.length}</span>}</span>
+				</button>
+				<button className='btn btn-light' onClick={() => removeLike(_id)}>
+					<i className='fas fa-thumbs-down' />
+				</button>
+				{showActions && (
 					<Link to={`/post/${_id}`} className='btn btn-primary'>
 						Discussion {comments.length > 0 && <span>{comments.length}</span>}
 					</Link>
-					{!auth.loading && user === auth.user._id && (
-						<button
-							onClick={() => deletePost(_id)}
-							type='button'
-							className='btn btn-danger'
-						>
-							<i className='fas fa-times' />
-						</button>
-					)}
-				</Fragment>
-			)}
+				)}
+				{!auth.loading && user === auth.user._id && (
+					<button
+						onClick={() => deletePost(_id)}
+						type='button'
+						className='btn btn-danger'
+					>
+						<i className='fas fa-times' />
+					</button>
+				)}
+			</Fragment>
 		</div>
 	</div>
 );

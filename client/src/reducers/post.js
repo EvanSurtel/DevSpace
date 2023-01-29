@@ -5,6 +5,7 @@ import {
 	POST_ERROR,
 	UPDATE_LIKES,
 	UPDATE_COMMENTS,
+	ADD_POST,
 } from '../actions/types';
 
 const initialSate = {
@@ -56,6 +57,12 @@ function postReducer(state = initialSate, action) {
 			return {
 				...state,
 				posts: state.posts.filter((post) => post._id !== payload),
+			};
+		case ADD_POST:
+			return {
+				...state,
+				posts: [payload, ...state.posts],
+				loading: false,
 			};
 		default:
 			return state;

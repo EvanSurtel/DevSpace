@@ -23,7 +23,7 @@ const CommentItem = ({
 			<p className='post-date'>Posted on{formatDate(date)}</p>
 			{!auth.loading && user === auth.user._id && (
 				<button
-					onClick={() => deleteComment(postId)}
+					onClick={() => deleteComment(postId, _id)}
 					type='button'
 					className='btn btn-danger'
 				>

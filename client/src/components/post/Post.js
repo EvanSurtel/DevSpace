@@ -17,7 +17,9 @@ const Post = ({ getPost, post: { post, loading } }) => {
 	}, [getPost, id]);
 	console.log(post);
 
-	return !loading || post ? (
+	if (loading || post === null) return <Spinner />;
+
+	return (
 		<section className='container'>
 			<PostItem post={post} showActions={false} />
 			<CommentForm postId={post._id} />
@@ -27,8 +29,6 @@ const Post = ({ getPost, post: { post, loading } }) => {
 				))}
 			</div>
 		</section>
-	) : (
-		<Spinner />
 	);
 };
 
