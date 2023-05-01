@@ -23,9 +23,10 @@ const Dashboard = ({
 			<p className='lead'>
 				<i className='fas fa-user' /> Welcome {user && user.name}
 			</p>
+
 			{profile !== null ? (
 				<>
-					<DashboardActions />
+					<DashboardActions user_id={user._id} />
 					<Experience experience={profile.experience} />
 					<Education education={profile.education} />
 

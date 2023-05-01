@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const DashboardActions = () => {
+import PropTypes from 'prop-types';
+import { parseTwoDigitYear } from 'moment';
+import { connect } from 'react-redux';
+const DashboardActions = ({ user_id }) => {
 	return (
 		<div className='dash-buttons'>
+			<Link to={`/profile/${user_id}`} className='btn btn-primary'>
+				View Profile
+			</Link>
 			<Link to='/edit-profile' className='btn btn-light'>
 				<i className='fas fa-user-circle text-primary'></i> Edit Profile
 			</Link>
@@ -15,6 +20,10 @@ const DashboardActions = () => {
 			</Link>
 		</div>
 	);
+};
+
+DashboardActions.propTypes = {
+	user_id: PropTypes.string.isRequired,
 };
 
 export default DashboardActions;

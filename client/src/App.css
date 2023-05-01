@@ -396,10 +396,14 @@ button {
 .profile-about {
   grid-area: about;
   text-align: center;
+  overflow-wrap: break-word; /* Break long words to fit the container */
+  word-wrap: break-word; /* For older browsers */
+  max-width: 100%; /* Set the maximum width */
 }
 
 .profile-about .skills {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   text-align: center;

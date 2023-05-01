@@ -20,9 +20,9 @@ const Profile = ({ getProfileById, profile: { profile }, auth }) => {
 		<section className='container'>
 			{profile ? (
 				<Fragment>
-					<Link to='/profiles' className='btn btn-light'>
+					{/* <Link to='/profiles' className='btn btn-light'>
 						Back to profiles
-					</Link>
+					</Link> */}
 					{auth.isAuthenticated &&
 						auth.loading === false &&
 						auth.user._id === profile.user._id && (
